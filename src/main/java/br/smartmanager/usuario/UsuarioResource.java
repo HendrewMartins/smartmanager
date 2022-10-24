@@ -86,7 +86,7 @@ public class UsuarioResource {
 
     public Response generateToken(UsuarioLogin userLogin) throws Exception{
 
-        Usuario usuario = repository.find("nomeAcesso", userLogin.getNomeAcesso()).firstResult();
+        Usuario usuario = repository.find("usunomace", userLogin.getNomeAcesso()).firstResult();
 
         try {
             if (usuario != null && verifyCryptPassword(usuario, userLogin)){
