@@ -1,8 +1,10 @@
 package br.smartmanager.usuario;
 
+import br.smartmanager.usuario.enums.Role;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -18,13 +20,15 @@ public class Usuario {
     @Column(name = "usuarioId")
     private Integer id;
 
-
+    @NotNull
     @Column(name = "usucodart")
     private Long codigoArtia;
 
+    @NotNull
     @Column(name = "usunome")
     private String nome;
 
+    @NotNull
     @Column(name = "usunomace")
     private String nomeAcesso;
 
@@ -37,7 +41,12 @@ public class Usuario {
     @Column(name = "usuemail")
     private String email;
 
+    @NotNull
     @Column(name = "ususenha")
     private String senha;
+
+    @Column(name="roles")
+    @Enumerated (EnumType.STRING)
+    private Role roles;
 
 }
