@@ -22,5 +22,22 @@ public class Usuario {
     @Column(name = "usucodart")
     private Long codigoArtia;
 
+    @Column(name = "usunome")
+    private String nome;
+
+    @Column(name = "usunomace")
+    private String nomeAcesso;
+
+    @Column(name = "usuadmin")
+    private Boolean administrador;
+
+    @Column(name= "usubaixa")
+    private Boolean usubaixa;
+
+    @Column(name = "usuemail")
+    private String email;
+
+    @Column(name = "ususenha")
+    private String senha;
 
 }
