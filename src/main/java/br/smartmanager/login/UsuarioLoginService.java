@@ -17,7 +17,7 @@ import javax.ws.rs.core.Response;
 
 @Path("api/login")
 @RequestScoped
-@Produces(MediaType.APPLICATION_JSON)
+@Produces(MediaType.TEXT_PLAIN)
 @Consumes(MediaType.APPLICATION_JSON)
 public class UsuarioLoginService {
 

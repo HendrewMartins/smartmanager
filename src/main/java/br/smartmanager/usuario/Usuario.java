@@ -11,13 +11,12 @@ import javax.validation.constraints.NotNull;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "usuario")
+@Table(name = "usuari", schema="PUBLIC")
 @Entity
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "usuarioId")
+    @Column(name = "usucodigo")
     private Integer id;
 
     @NotNull
@@ -36,7 +35,7 @@ public class Usuario {
     private Boolean administrador;
 
     @Column(name= "usubaixa")
-    private Boolean usubaixa;
+    private Boolean usuarioBaixa;
 
     @Column(name = "usuemail")
     private String email;

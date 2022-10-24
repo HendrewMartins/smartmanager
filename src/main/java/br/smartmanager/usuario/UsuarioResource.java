@@ -3,6 +3,7 @@ package br.smartmanager.usuario;
 import br.smartmanager.exception.MenssageNotFoundException;
 import br.smartmanager.login.UsuarioLogin;
 import br.smartmanager.usuario.repository.UsuarioRepository;
+import br.smartmanager.util.ObjectEntityUtil;
 import br.smartmanager.util.PBKDF2Encoder;
 import br.smartmanager.util.TokenUtils;
 import br.smartmanager.util.dtos.Token;
@@ -11,6 +12,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -25,6 +27,9 @@ public class UsuarioResource {
     @Inject
     PBKDF2Encoder encoder;
 
+    @Inject
+    EntityManager em;
+
     @ConfigProperty(name = "br.smartmanager.jwt.duration") public Long duration;
     @ConfigProperty(name = "mp.jwt.verify.issuer") public String issuer;
 
@@ -32,6 +37,7 @@ public class UsuarioResource {
     public Usuario saveUsuario(Usuario usuario) {
         if (!usuarioExiste(usuario.getEmail())) {
             usuario.setSenha(encoder.encode(usuario.getSenha()));
+            usuario.setId(new ObjectEntityUtil().maxIdInteger(em, "usuari","usucodigo"));
             repository.persistAndFlush(usuario);
             return usuario;
         }
@@ -86,12 +92,12 @@ public class UsuarioResource {
 
     public Response generateToken(UsuarioLogin userLogin) throws Exception{
 
-        Usuario usuario = repository.find("usunomace", userLogin.getNomeAcesso()).firstResult();
+        Usuario usuario = repository.find("nomeAcesso", userLogin.getNomeAcesso()).firstResult();
 
         try {
             if (usuario != null && verifyCryptPassword(usuario, userLogin)){
                 try {
-                    return Response.ok(new Token(TokenUtils.generateToken(usuario.getEmail(), usuario.getRoles(), duration, issuer))).build();
+                    return Response.ok(TokenUtils.generateToken(usuario.getEmail(), usuario.getRoles(), duration, issuer)).build();
                 } catch (Exception e) {
                     return Response.status(Status.UNAUTHORIZED).build();
                 }
