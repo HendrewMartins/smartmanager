@@ -2,9 +2,9 @@ package br.smartmanager.usuario;
 
 import br.smartmanager.usuario.enums.Role;
 import lombok.*;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -20,6 +20,7 @@ public class Usuario {
     @Column(name = "usuarioId")
     private Integer id;
 
+    @NotNull
     @Column(name = "usucodart")
     private Long codigoArtia;
 
@@ -40,10 +41,10 @@ public class Usuario {
     @Column(name = "usuemail")
     private String email;
 
+    @NotNull
     @Column(name = "ususenha")
     private String senha;
 
-    @NotNull
     @Column(name="roles")
     @Enumerated (EnumType.STRING)
     private Role roles;
